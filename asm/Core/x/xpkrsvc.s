@@ -28,8 +28,8 @@ PKRGetReadFuncs__Fi:
 /* 800392A4 000360A4  41 82 00 08 */	beq lbl_800392AC
 /* 800392A8 000360A8  48 00 00 10 */	b lbl_800392B8
 lbl_800392AC:
-/* 800392AC 000360AC  3C 60 80 28 */	lis r3, lbl_8027D8EC@ha
-/* 800392B0 000360B0  38 63 D8 EC */	addi r3, r3, lbl_8027D8EC@l
+/* 800392AC 000360AC  3C 60 80 28 */	lis r3, g_pkr_read_funcmap@ha
+/* 800392B0 000360B0  38 63 D8 EC */	addi r3, r3, g_pkr_read_funcmap@l
 /* 800392B4 000360B4  4E 80 00 20 */	blr 
 lbl_800392B8:
 /* 800392B8 000360B8  38 60 00 00 */	li r3, 0
@@ -45,9 +45,9 @@ PKRStartup__Fv:
 /* 800392D4 000360D4  2C 03 00 00 */	cmpwi r3, 0
 /* 800392D8 000360D8  90 0D 8A 34 */	stw r0, lbl_803CB334-_SDA_BASE_(r13)
 /* 800392DC 000360DC  40 82 00 28 */	bne lbl_80039304
-/* 800392E0 000360E0  3C 60 80 28 */	lis r3, lbl_8027D8EC@ha
+/* 800392E0 000360E0  3C 60 80 28 */	lis r3, g_pkr_read_funcmap@ha
 /* 800392E4 000360E4  3C 80 80 28 */	lis r4, lbl_8027D8A8@ha
-/* 800392E8 000360E8  38 63 D8 EC */	addi r3, r3, lbl_8027D8EC@l
+/* 800392E8 000360E8  38 63 D8 EC */	addi r3, r3, g_pkr_read_funcmap@l
 /* 800392EC 000360EC  38 84 D8 A8 */	addi r4, r4, lbl_8027D8A8@l
 /* 800392F0 000360F0  48 00 00 29 */	bl __as__20st_PACKER_READ_FUNCSFRC20st_PACKER_READ_FUNCS
 /* 800392F4 000360F4  4B FF 3C 7D */	bl get_HIPLFuncs__Fv
@@ -3623,9 +3623,9 @@ PKR_pop_memmark__Fv:
 /* 8003C444 00039244  4E 80 00 20 */	blr 
 
 __sinit_xpkrsvc_cpp:
-/* 8003C448 00039248  3C 80 80 28 */	lis r4, lbl_8027D8EC@ha
+/* 8003C448 00039248  3C 80 80 28 */	lis r4, g_pkr_read_funcmap@ha
 /* 8003C44C 0003924C  3C 60 80 28 */	lis r3, lbl_8027D8A8@ha
-/* 8003C450 00039250  38 84 D8 EC */	addi r4, r4, lbl_8027D8EC@l
+/* 8003C450 00039250  38 84 D8 EC */	addi r4, r4, g_pkr_read_funcmap@l
 /* 8003C454 00039254  38 00 00 08 */	li r0, 8
 /* 8003C458 00039258  38 63 D8 A8 */	addi r3, r3, lbl_8027D8A8@l
 /* 8003C45C 0003925C  38 A4 FF FC */	addi r5, r4, -4
@@ -3653,7 +3653,8 @@ Name__19st_PACKER_ATOC_NODECFv:
 .section .data
 lbl_8027D8A8:
 	.incbin "baserom.dol", 0x27A888, 0x44
-lbl_8027D8EC:
+.global g_pkr_read_funcmap
+g_pkr_read_funcmap:
 	.incbin "baserom.dol", 0x27A8CC, 0x44
 lbl_8027D930:
 	.incbin "baserom.dol", 0x27A910, 0x26D4
@@ -3667,8 +3668,6 @@ lbl_8028685C:
 	.incbin "baserom.dol", 0x28383C, 0x2C
 
 .section .sbss
-	/* needed to ensure correct alignment */
-    .skip 0x8
 lbl_803CB328:
 	.skip 0x4
 lbl_803CB32C:

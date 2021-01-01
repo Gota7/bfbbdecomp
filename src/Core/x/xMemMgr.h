@@ -22,6 +22,7 @@ struct xMemPool
 extern uint32 gActiveHeap;
 
 void xMemExit();
+void xMemPopTemp(void* addr);
 int32 xMemPopBase(int32 depth);
 void* xMemGrowAlloc(uint32 heapID, uint32 size);
 void* xMemAlloc(uint32 heapID, uint32 size, int32 align);

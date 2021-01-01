@@ -1,11 +1,19 @@
 #ifndef ZGOO_H
 #define ZGOO_H
 
+#include "../Core/x/xEnt.h"
 #include "../Core/x/xVec3.h"
 
 #include <types.h>
 #include <rwcore.h>
 #include <rpworld.h>
+
+struct zGooParams
+{
+    float32 depth;
+    float32 orig_depth;
+    xEnt* goo_ent;
+};
 
 enum zFXGooState
 {
@@ -40,6 +48,13 @@ struct zFXGooInstance
     xVec3 pos_parentOnFreeze;
 };
 
+void zGooInit(int32 nobj);
+void zGooExit();
+int32 zGooAdd(xEnt* obj, float32 depth, int32 freezeGroup);
+int32 zGooIs(xEnt* obj, float32& depth, uint32 playerCheck);
+void zGooCollsBegin();
+void zGooCollsEnd();
 void zGooStopTide();
+void zGooMeltFinished(RpAtomic* atomic);
 
 #endif

@@ -9,8 +9,23 @@ void zScriptInit(void* data, void* asset)
     zScriptInit((xBase*)data, (xScriptAsset*)asset);
 }
 
-// func_800B5248
-#pragma GLOBAL_ASM("asm/Game/zScript.s", "zScriptInit__FP5xBaseP12xScriptAsset")
+void zScriptInit(xBase* data, xScriptAsset* asset)
+{
+    xBaseInit(data, (xBaseAsset*)asset);
+    data->eventFunc = zScriptEventCB;
+    ((zScript*)data)->tasset = asset;
+    if (data->linkCount != 0)
+    {
+        data->link = (xLinkAsset*)(((zScript*)data)->tasset + 1);
+        data->link = data->link + asset->eventCount;
+    }
+    else
+    {
+        data->link = (xLinkAsset*)0x0;
+    }
+    ((zScript*)data)->time = ((zScript*)data)->tasset->scriptStartTime;
+    ((zScript*)data)->more = 1;
+}
 
 void zScriptReset(zScript* script)
 {

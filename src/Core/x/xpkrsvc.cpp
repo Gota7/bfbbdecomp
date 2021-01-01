@@ -2,8 +2,26 @@
 
 #include <types.h>
 
+extern st_PACKER_READ_FUNCS g_pkr_read_funcmap;
+
+#if 1
+
 // func_800392A0
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKRGetReadFuncs__Fi")
+
+#else
+
+//Doesn't like the variable?
+st_PACKER_READ_FUNCS* PKRGetReadFuncs(int32 apiver)
+{
+	if (apiver != 1)
+	{
+		return NULL;
+  	}
+	return &g_pkr_read_funcmap;
+}
+
+#endif
 
 // func_800392C0
 #pragma GLOBAL_ASM("asm/Core/x/xpkrsvc.s", "PKRStartup__Fv")
