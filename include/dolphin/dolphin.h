@@ -3,12 +3,11 @@
 
 #include "dolphin/types.h"
 #include "dolphin/gx.h"
+#include "dolphin/mtx.h"
 #include "dolphin/os.h"
+#include "dolphin/vi.h"
 
 extern "C" {
-void OSPanic(int8* param_1, uint32 param_2, int8* param_3);
-void* OSAllocFromHeap(void* handle_t, uint32 size_t);
-void OSFreeToHeap(void* handle_t, void* param_2);
 void PADInit();
 void PADControlMotor(int32 chan, uint32 command);
 }

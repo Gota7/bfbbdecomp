@@ -2,11 +2,69 @@
 
 #include <types.h>
 
+extern OSHeapHandle __OSCurrHeap;
+
+#if 1
+
 // func_80180038
 #pragma GLOBAL_ASM("asm/Core/p2/iTRC.s", "Init__7ROMFontFv")
 
+#else
+
+// The cast near the bottom does not happen, but it must somehow.
+void ROMFont::Init()
+{
+	uint16 enc = OSGetFontEncode();
+	enc == 1 ? ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0x120f00) : ROMFont::mFontData = (OSFontHeader*)OSAllocFromHeap(__OSCurrHeap, 0x20120);
+	OSInitFont(ROMFont::mFontData);
+}
+
+#endif
+
+#if 1
+
 // func_80180094
 #pragma GLOBAL_ASM("asm/Core/p2/iTRC.s", "InitDisplay__7ROMFontFP16_GXRenderModeObj")
+
+#else
+
+// WIP.
+void ROMFont::InitDisplay(_GXRenderModeObj* renderMode)
+{
+	local_94 = @415;
+	mRenderMode__7ROMFont = renderMode;
+	RwGameCubeGetXFBs(&mXFBs__7ROMFont,0x803cc0f8);
+	mCurrentFrameBuffer__7ROMFont = mXFBs__7ROMFont._4_4_;
+	InitGX();
+	InitVI();
+	local_98 = local_94;
+	GXSetCopyClear(&local_98,0xffffff);
+	dVar1 = (double)@422;
+	uStack28 = (uint)mRenderMode__7ROMFont->ebfHeight;
+	uStack20 = (uint)mRenderMode__7ROMFont->fbWidth;
+	local_20 = 0x43300000;
+	local_18 = 0x43300000;
+	C_MTXOrtho(dVar1,(double)(float)((double)CONCAT44(0x43300000,uStack28) - @425),dVar1,
+             (double)(float)((double)CONCAT44(0x43300000,uStack20) - @425),dVar1,(double)@423,
+             auStack96);
+	GXSetProjection(auStack96,1);
+	PSMTXIdentity(auStack144);
+	GXLoadPosMtxImm(auStack144,0);
+	GXSetCurrentMtx(0);
+	GXSetZMode(1,7,1);
+	GXSetNumChans(0);
+	GXSetNumTevStages(1);
+	GXSetTevOp(0,3);
+	GXSetTevOrder(0,0,0,0xff);
+	GXSetBlendMode(1,1,1,0);
+	GXClearVtxDesc();
+	GXSetVtxDesc(9,1);
+	GXSetVtxDesc(0xd,1);
+	GXSetVtxAttrFmt(GX_VTXFMT0, 9,1,3,0);
+	GXSetVtxAttrFmt(GX_VTXFMT0, 0xd,1,3,0);
+}
+
+#endif
 
 // func_80180214
 #pragma GLOBAL_ASM("asm/Core/p2/iTRC.s", "InitGX__7ROMFontFv")

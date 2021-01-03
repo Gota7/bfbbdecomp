@@ -6,6 +6,8 @@ extern "C" {
 #endif
 
 #include "types.h"
+#include "os/OSAlloc.h"
+#include "os/OSFont.h"
 
 typedef int64 OSTime;
 
@@ -25,6 +27,7 @@ struct OSCalendarTime
 
 OSTime OSGetTime();
 void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime* td);
+void OSPanic (const char* file, int32 line, const char* msg, ...);
 
 #ifdef __cplusplus
 }

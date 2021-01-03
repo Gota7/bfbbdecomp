@@ -10,6 +10,7 @@ extern "C" {
 
 void GXSetColorUpdate(GXBool update_enable);
 void GXSetAlphaUpdate(GXBool update_enable);
+void GXSetZMode(GXBool compare_enable, GXCompare func, GXBool update_enable);
 
 #ifdef __cplusplus
 }
